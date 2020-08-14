@@ -1,0 +1,60 @@
+.operation {
+  margin-top: 40px;
+  margin-bottom: 40px;
+  background-color: var(--footer-color);
+  border-radius: 25px;
+  padding: 15px 15px;
+}
+
+
+.operation__fields {
+  display: block;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 10px 15px;
+  margin: 5px 0;
+  width: 100%;
+  outline: transparent;
+}
+
+.operation__fields:focus {
+  border: 1px solid darkorange;
+}
+
+.operation__btns {
+  display: flex;
+  justify-content: space-around;
+}
+
+.operation__btn {
+  border-width: 2px;
+  border-style: solid;
+  color: var(--main-color);
+  border-radius: 10px;
+  font-size: 1.25em;
+  font-weight: 700;
+  padding: 15px 30px;
+  margin: 15px 0;
+  cursor: pointer;
+  outline: none;
+}
+
+.operation__btn-subtract {
+  background-color: var(--negative-color);
+  border-color: var(--negative-color);
+}
+
+.operation__btn-subtract:hover {
+  background-color: var(--main-color);
+  color: var(--negative-color)
+}
+
+.operation__btn-add {
+  background-color: var(--positive-color);
+  border-color: var(--positive-color);
+}
+
+.operation__btn-add:hover {
+  background-color: var(--main-color);
+  color: var(--positive-color)
+}

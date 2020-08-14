@@ -1,0 +1,46 @@
+.total {
+  padding: 20px;
+  background-color: var(--main-color);
+  border: 1px solid var(--border-color);
+  border-radius: 25px;
+}
+
+.total__balance {
+  font-size: 1.75em;
+  font-weight: bold;
+}
+
+.total__header {
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.total__main {
+  display: flex;
+  justify-content: space-between;
+}
+
+.total__main-item {
+  flex: 1;
+  text-align: center;
+  padding-top: 15px;
+}
+
+.total__main-item:first-child {
+  border-right: 1px solid var(--border-color);
+}
+
+.total__money {
+  font-size: 1.5em;
+  line-height: 1.5;
+}
+
+.total__money-expenses {
+  color: var(--negative-color);
+}
+
+.total__money-income {
+  color: var(--positive-color);
+}
