@@ -19,6 +19,10 @@ class App extends Component {
     this.getTotalBalance();
   }
 
+  componentDidUpdate() {
+    this.addLocalStorage()
+  }
+
   addTransaction = add =>  {
     const transactions = [...this.state.transactions]
 
@@ -39,10 +43,7 @@ class App extends Component {
       transactions,
       description: '',
       amount: '',
-    }, () => {
-      this.getTotalBalance();
-      this.addLocalStorage();
-    });
+    }, this.getTotalBalance);
   }
 
   addAmount = e => {
@@ -83,6 +84,13 @@ class App extends Component {
   addLocalStorage() {
     localStorage.setItem('calcMoney', JSON.stringify(this.state.transactions))
   }
+
+  delTransaction = id => {
+    const transactions = this.state.transactions.filter(item => item.id !== id)
+    this.setState({
+      transactions
+    }, this.getTotalBalance)
+  }
   
   render() {
     return (
@@ -102,7 +110,8 @@ class App extends Component {
             />
   
             <History 
-              transactions={this.state.transactions}
+              transactions={[...this.state.transactions]}
+              delTransaction={this.delTransaction}
             />
   
             <Operation 
