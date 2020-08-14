@@ -7,12 +7,12 @@ import Operation from './Components/Operation/Operation'
 class App extends Component {
 
   state = {
-    transactions: [],
+    transactions: JSON.parse(localStorage.getItem('calcMoney')) || [],
     description: '',
     amount: '',
-    globalTotal: 0,
-    totalExpenses: 0,
-    totalIncome: 0
+    totalBalance: 0,
+    resultExpenses: 0,
+    resultIncome: 0
   }
 
   addTransaction = add =>  {
@@ -34,14 +34,16 @@ class App extends Component {
     this.setState({
       transactions,
       description: '',
-      amount: ''
-    })
-    this.addBalance(add)
+      amount: '',
+    }, () => {
+      this.getTotalBalance();
+      this.addLocalStorage();
+    });
   }
 
   addAmount = e => {
     this.setState({
-      amount: e.target.value
+      amount: parseFloat(e.target.value)
     })
   }
 
@@ -51,26 +53,31 @@ class App extends Component {
     })
   }
 
-  addTotal = () => {
-    const globalTotal = this.state.totalIncome - this.state.totalExpenses
+  getIncome = () => this.state.transactions
+      .filter(item => item.add)
+      .reduce((acc, item) => item.amount + acc, 0)
+  
+
+  getExpenses = () => this.state.transactions
+      .filter(item => !item.add)
+      .reduce((acc, item) => item.amount + acc, 0)
+  
+
+  getTotalBalance = () => {
+    const resultIncome = this.getIncome();
+    const resultExpenses = this.getExpenses();
+
+    const totalBalance = resultIncome - resultExpenses;
+
     this.setState({
-      globalTotal
+      totalBalance,
+      resultExpenses,
+      resultIncome
     })
-    console.log('work')
   }
 
-  addBalance = (add) => {
-    if (add) {
-      this.setState({
-        totalIncome: +this.state.amount + this.state.totalIncome
-      }, this.addTotal)
-      
-    }
-    else {
-      this.setState({
-        totalExpenses: +this.state.amount + this.state.totalExpenses
-      }, this.addTotal)
-    }
+  addLocalStorage() {
+    localStorage.setItem('calcMoney', JSON.stringify(this.state.transactions))
   }
   
   render() {
@@ -85,9 +92,9 @@ class App extends Component {
           <div className="container">
   
             <Total 
-              globalTotal={this.state.globalTotal}
-              totalExpenses={this.state.totalExpenses}
-              totalIncome={this.state.totalIncome}
+              totalBalance={this.state.totalBalance}
+              resultExpenses={this.state.resultExpenses}
+              resultIncome={this.state.resultIncome}
             />
   
             <History 
