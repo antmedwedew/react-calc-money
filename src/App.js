@@ -10,6 +10,9 @@ class App extends Component {
     transactions: [],
     description: '',
     amount: '',
+    globalTotal: 0,
+    totalExpenses: 0,
+    totalIncome: 0
   }
 
   addTransaction = add =>  {
@@ -22,7 +25,7 @@ class App extends Component {
       add
     }
 
-    if(transaction.description === "" && transaction.amount === "") {
+    if (transaction.description === "" || transaction.amount === "") {
       return
     }
 
@@ -33,6 +36,7 @@ class App extends Component {
       description: '',
       amount: ''
     })
+    this.addBalance(add)
   }
 
   addAmount = e => {
@@ -47,9 +51,27 @@ class App extends Component {
     })
   }
 
-  // addTotal = () => {
-  //   const total
-  // }
+  addTotal = () => {
+    const globalTotal = this.state.totalIncome - this.state.totalExpenses
+    this.setState({
+      globalTotal
+    })
+    console.log('work')
+  }
+
+  addBalance = (add) => {
+    if (add) {
+      this.setState({
+        totalIncome: +this.state.amount + this.state.totalIncome
+      }, this.addTotal)
+      
+    }
+    else {
+      this.setState({
+        totalExpenses: +this.state.amount + this.state.totalExpenses
+      }, this.addTotal)
+    }
+  }
   
   render() {
     return (
@@ -62,7 +84,11 @@ class App extends Component {
         <main>
           <div className="container">
   
-            <Total />
+            <Total 
+              globalTotal={this.state.globalTotal}
+              totalExpenses={this.state.totalExpenses}
+              totalIncome={this.state.totalIncome}
+            />
   
             <History 
               transactions={this.state.transactions}
