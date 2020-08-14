@@ -15,6 +15,10 @@ class App extends Component {
     resultIncome: 0
   }
 
+  componentWillMount() {
+    this.getTotalBalance();
+  }
+
   addTransaction = add =>  {
     const transactions = [...this.state.transactions]
 
